@@ -12,9 +12,15 @@ function App() {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredProducts = products.filter((product) => {
+    const searchTerm = search.toLowerCase();
+
+    return (
+      product.name.toLowerCase().includes(searchTerm) ||
+      product.store.toLowerCase().includes(searchTerm) ||
+      product.category.toLowerCase().includes(searchTerm)
+    );
+  });
 
   return (
     <div className="app">
@@ -38,21 +44,13 @@ function App() {
             <div className="product-card" key={product.id}>
               <h3>{product.name}</h3>
 
-              <p className="description">
-                {product.description}
-              </p>
+              <p className="description">{product.description}</p>
 
-              <p className="price">
-                ${product.price}
-              </p>
+              <p className="price">${product.price}</p>
 
-              <p className="store">
-                🏪 {product.store}
-              </p>
+              <p className="store">🏪 {product.store}</p>
 
-              <p className="category">
-                {product.category}
-              </p>
+              <p className="category">{product.category}</p>
 
               <button>View Deal</button>
             </div>
